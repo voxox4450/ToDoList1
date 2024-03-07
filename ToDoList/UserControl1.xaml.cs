@@ -41,16 +41,24 @@ namespace ToDoList
         {
             Hide();
             MainWindow.Show();
+
             string contentText = content.Text;
             DateTime EndDate = DateTime.Parse(end.Text);
             DateTime StartDate = DateTime.Parse(start.Text);
             string Priority = prio.Text;
             string Status = status.Text;
+            Note newNote= new Note(contentText, EndDate, StartDate, Priority, Status);
+            Console.WriteLine("XD");
 
         }
-        public class Note()
+        public class Note(string contentText, DateTime endDate, DateTime startDate, string priority, string status)
         {
-
+            public string ContentText { get; set; } = contentText;
+            public DateTime EndDate { get; set; } = endDate;
+            public DateTime StartDate { get; set; } = startDate;
+            public string Priority { get; set; } = priority;
+            public string Status { get; set; } = status;
+            
         }
     }
 }
