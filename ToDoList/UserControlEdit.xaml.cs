@@ -37,6 +37,8 @@ namespace ToDoList
             }
 
             content.Text = selectedNote.ContentText;
+            start.SelectedDate = selectedNote.StartDate;
+            end.SelectedDate = selectedNote.EndDate;
             prio.Text = selectedNote.Priority;
             status.Text = selectedNote.Status;
         }

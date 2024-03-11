@@ -12,7 +12,6 @@
     ResizeMode="NoResize"
     mc:Ignorable="d">
     <Grid>
-        <Frame NavigationUIVisibility="Hidden" />
         <Grid x:Name="MainMenu">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
@@ -113,7 +112,7 @@
             </ListView>
         </Grid>
         <Grid>
-            <Frame x:Name="Frame" />
+            <Frame x:Name="Frame" NavigationUIVisibility="Hidden" />
         </Grid>
     </Grid>
 </Window>

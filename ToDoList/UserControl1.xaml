@@ -141,8 +141,5 @@
                 FontSize="25"
                 FontWeight="Bold" />
         </Grid>
-        <Grid>
-            <Frame x:Name="FrameUserControl1" />
-        </Grid>
     </Grid>
 </UserControl>
