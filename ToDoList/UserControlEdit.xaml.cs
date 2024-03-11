@@ -22,9 +22,7 @@ namespace ToDoList
     public partial class UserControlEdit : UserControl
     {
         public MainWindow MainWindow { get; set; }
-        public string textBox { get; set; }
-        public string priorityBox { get; set; }
-        public string statusBox { get; set; }
+
         public Note selectedNote { get; set; }
 
         public UserControlEdit(MainWindow mainWindow)
@@ -38,9 +36,9 @@ namespace ToDoList
                 return;
             }
 
-            textBox = content.Text = selectedNote.ContentText;
-            priorityBox = prio.Text = selectedNote.Priority;
-            statusBox = status.Text = selectedNote.Status;
+            content.Text = selectedNote.ContentText;
+            prio.Text = selectedNote.Priority;
+            status.Text = selectedNote.Status;
         }
 
         public void Show()

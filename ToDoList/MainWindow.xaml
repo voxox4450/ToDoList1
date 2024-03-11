@@ -94,6 +94,21 @@
                         <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
                     </GridView>
                 </ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Status}" Value="Dodano">
+                                <Setter Property="Background" Value="#FFFF5151" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Status}" Value="Rozpoczęto">
+                                <Setter Property="Background" Value="#FFF5F535" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Status}" Value="Ukońoczono">
+                                <Setter Property="Background" Value="Green" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
             </ListView>
         </Grid>
         <Grid>
