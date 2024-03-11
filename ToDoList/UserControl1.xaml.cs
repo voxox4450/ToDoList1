@@ -48,15 +48,20 @@ namespace ToDoList
             DateTime StartDate = Convert.ToDateTime(start.SelectedDate);
             string Priority = prio.Text;
             string Status = status.Text;
-            if (StartDate < DateTime.Now)
+            if (StartDate < DateTime.Now && EndDate > DateTime.Now)
+            {
+                Status = "Rozpoczęto";
+                
+            }
+            if (StartDate > DateTime.Now)
             {
                 Status = "Dodano";
             }
-            if (EndDate < DateTime.Now)
+            if (EndDate < DateTime.Now && StartDate < EndDate)
             {
-                Status = "Ukończono";
+                Status = "Ukońoczono";
             }
-            if (DateTime.Compare(StartDate, EndDate) > 0)
+            if (DateTime.Compare(StartDate, EndDate) >= 0)
             {
                 MessageBox.Show("Rozpoczecie musi być większe niż zakończenie", "Błąd");
             }

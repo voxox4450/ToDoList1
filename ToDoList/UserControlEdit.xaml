@@ -48,7 +48,7 @@
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 FontSize="25">
-                Termin wykoniania:
+                Termin rozpoczęcia:
             </Label>
             <Label
                 Grid.Row="3"
@@ -56,7 +56,7 @@
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 FontSize="25">
-                Termin rozpoczęcia:
+                Termin wykoniania:
             </Label>
             <Label
                 Grid.Row="4"
@@ -66,27 +66,21 @@
                 FontSize="25">
                 Priorytet:
             </Label>
-            <Label
-                Grid.Row="5"
-                Grid.Column="0"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontSize="25">
-                Status:
-            </Label>
+
             <TextBox
                 x:Name="content"
                 Grid.Row="1"
-                Grid.Column="1" />
+                Grid.Column="1"
+                FontSize="15" />
             <DatePicker
-                x:Name="end"
+                x:Name="start"
                 Grid.Row="2"
                 Grid.Column="1"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="60" />
             <DatePicker
-                x:Name="start"
+                x:Name="end"
                 Grid.Row="3"
                 Grid.Column="1"
                 HorizontalAlignment="Center"
@@ -117,7 +111,8 @@
                 Width="380"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontSize="60">
+                FontSize="60"
+                Visibility="Collapsed">
                 <ComboBoxItem>
                     Ukońoczono
                 </ComboBoxItem>

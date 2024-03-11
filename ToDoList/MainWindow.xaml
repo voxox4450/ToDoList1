@@ -12,6 +12,7 @@
     ResizeMode="NoResize"
     mc:Ignorable="d">
     <Grid>
+        <Frame NavigationUIVisibility="Hidden" />
         <Grid x:Name="MainMenu">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
