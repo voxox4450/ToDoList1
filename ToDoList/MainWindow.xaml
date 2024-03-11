@@ -25,7 +25,6 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
-
             </Grid.RowDefinitions>
             <Label
                 Grid.Row="0"
@@ -54,6 +53,7 @@
                 Height="80"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
+                Click="EditButton_Click"
                 Content="Edytuj"
                 FontSize="25" />
             <Button
@@ -63,6 +63,7 @@
                 Height="80"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
+                Click="DelButton_Click"
                 Content="Usuń"
                 FontSize="25" />
             <Button
@@ -76,6 +77,24 @@
                 Content="Wyjdź"
                 FontSize="25"
                 FontWeight="Black" />
+            <ListView
+                x:Name="listView"
+                Grid.Row="1"
+                Grid.RowSpan="4"
+                Grid.ColumnSpan="2"
+                Margin="333,0,0,0"
+                Background="AntiqueWhite"
+                FontSize="15">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding ContentText}" Header="Treść" />
+                        <GridViewColumn DisplayMemberBinding="{Binding StartDate}" Header="Rozpoczęcię" />
+                        <GridViewColumn DisplayMemberBinding="{Binding EndDate}" Header="Zakończenie" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Priority}" Header="Priorytet" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </Grid>
         <Grid>
             <Frame x:Name="Frame" />

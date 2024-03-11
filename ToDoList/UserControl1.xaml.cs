@@ -28,10 +28,12 @@ namespace ToDoList
 
             MainWindow = mainWindow;
         }
+
         public void Show()
         {
             AddControl.Visibility = Visibility.Visible;
         }
+
         public void Hide()
         {
             AddControl.Visibility = Visibility.Collapsed;
@@ -41,24 +43,28 @@ namespace ToDoList
         {
             Hide();
             MainWindow.Show();
-
             string contentText = content.Text;
-            DateTime EndDate = DateTime.Parse(end.Text);
-            DateTime StartDate = DateTime.Parse(start.Text);
+            DateTime EndDate = Convert.ToDateTime(end.SelectedDate);
+            DateTime StartDate = Convert.ToDateTime(start.SelectedDate);
             string Priority = prio.Text;
             string Status = status.Text;
-            Note newNote= new Note(contentText, EndDate, StartDate, Priority, Status);
-            Console.WriteLine("XD");
-
-        }
-        public class Note(string contentText, DateTime endDate, DateTime startDate, string priority, string status)
-        {
-            public string ContentText { get; set; } = contentText;
-            public DateTime EndDate { get; set; } = endDate;
-            public DateTime StartDate { get; set; } = startDate;
-            public string Priority { get; set; } = priority;
-            public string Status { get; set; } = status;
-            
+            if (StartDate < DateTime.Now)
+            {
+                Status = "Dodano";
+            }
+            if (EndDate < DateTime.Now)
+            {
+                Status = "Ukończono";
+            }
+            if (DateTime.Compare(StartDate, EndDate) > 0)
+            {
+                MessageBox.Show("Rozpoczecie musi być większe niż zakończenie", "Błąd");
+            }
+            else
+            {
+                Note newNote = new Note(contentText, EndDate, StartDate, Priority, Status);
+                MainWindow.listView.Items.Add(newNote);
+            }
         }
     }
 }
