@@ -79,7 +79,6 @@ namespace ToDoList
                 MessageBox.Show("Musisz wybrać element z listy", "Błąd");
                 Log.Error("Nie wybrano elementu z listy");
             }
-            //listView.Items
         }
     }
 }

@@ -65,11 +65,11 @@ namespace ToDoList
             {
                 Status = "Rozpoczęto";
             }
-            if (StartDate > DateTime.Now)
+            else if (StartDate > DateTime.Now)
             {
                 Status = "Dodano";
             }
-            if (EndDate < DateTime.Now && StartDate < EndDate)
+            else if (EndDate < DateTime.Now && StartDate < EndDate)
             {
                 Status = "Ukońoczono";
             }
