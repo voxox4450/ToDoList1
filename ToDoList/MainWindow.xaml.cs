@@ -12,6 +12,8 @@ namespace ToDoList
     {
         private UserControl1 userControl1;
         private UserControlEdit userControlEdit;
+        public List<Priority> priorityList = new List<Priority>();
+        public List<Status> statusList = new List<Status>();
 
         public MainWindow()
         {
@@ -23,6 +25,14 @@ namespace ToDoList
                 .CreateLogger();
 
             Log.Information("Włączono aplikację");
+
+            priorityList.Add(new Priority { id = 1, name = "Wysoki" });
+            priorityList.Add(new Priority { id = 2, name = "Średni" });
+            priorityList.Add(new Priority { id = 3, name = "Niski" });
+
+            statusList.Add(new Status { id = 1, name = "Ukońoczono" });
+            statusList.Add(new Status { id = 2, name = "Rozpoczęto" });
+            statusList.Add(new Status { id = 3, name = "Dodano" });
 
             InitializeComponent();
             userControl1 = new UserControl1(this);

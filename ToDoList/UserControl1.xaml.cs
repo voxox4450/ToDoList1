@@ -22,23 +22,14 @@ namespace ToDoList
     public partial class UserControl1 : UserControl
     {
         public MainWindow MainWindow { get; set; }
-        private List<Priority> priorityList = new List<Priority>();
-        private List<Status> statusList = new List<Status>();
 
         public UserControl1(MainWindow mainWindow)
         {
             InitializeComponent();
-            priorityList.Add(new Priority { id = 1, name = "Wysoki" });
-            priorityList.Add(new Priority { id = 2, name = "Średni" });
-            priorityList.Add(new Priority { id = 3, name = "Niski" });
-
-            statusList.Add(new Status { id = 1, name = "Ukońoczono" });
-            statusList.Add(new Status { id = 2, name = "Rozpoczęto" });
-            statusList.Add(new Status { id = 3, name = "Dodano" });
 
             MainWindow = mainWindow;
-            prio.ItemsSource = priorityList;
-            status.ItemsSource = statusList;
+            prio.ItemsSource = MainWindow.priorityList;
+            status.ItemsSource = MainWindow.statusList;
         }
 
         public void Show()
