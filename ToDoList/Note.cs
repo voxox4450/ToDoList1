@@ -16,7 +16,7 @@ namespace ToDoList
 
         public string Show()
         {
-            return contentText + " | " + endDate + " | " + startDate + " | " + priority + " | " + status;
+            return contentText + " | " + startDate.ToString("dd.MM.yyyy") + " | " + endDate.ToString("dd.MM.yyyy") + " | " + priority + " | " + status;
         }
     }
 }

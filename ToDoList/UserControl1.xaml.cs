@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,7 +52,6 @@ namespace ToDoList
             if (StartDate < DateTime.Now && EndDate > DateTime.Now)
             {
                 Status = "Rozpoczęto";
-                
             }
             if (StartDate > DateTime.Now)
             {
@@ -64,11 +64,13 @@ namespace ToDoList
             if (DateTime.Compare(StartDate, EndDate) >= 0)
             {
                 MessageBox.Show("Rozpoczecie musi być większe niż zakończenie", "Błąd");
+                Log.Error("Błąd wybrano błędną datę");
             }
             else
             {
                 Note newNote = new Note(contentText, EndDate, StartDate, Priority, Status);
                 MainWindow.listView.Items.Add(newNote);
+                Log.Information("Dodano zadanie: {" + newNote.Show() + "}");
             }
         }
     }

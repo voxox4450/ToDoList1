@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -78,13 +79,36 @@ namespace ToDoList
             }
             else
             {
-                object DelNote = MainWindow.listView.SelectedItem;
-                MainWindow.listView.Items.Remove(DelNote);
-                Note newNote = new Note(contentText, EndDate, StartDate, Priority, Status);
-                MainWindow.listView.Items.Add(newNote);
+                if (MainWindow.listView.SelectedItem is Note delNote)
+                {
+                    string textT = delNote.ContentText;
+                    DateTime startT = delNote.StartDate;
+                    DateTime endT = delNote.EndDate;
+                    string priorityT = delNote.Priority;
+                    string statusT = delNote.Status;
+
+                    MainWindow.listView.Items.Remove(delNote);
+
+                    Note newNote = new Note(contentText, EndDate, StartDate, Priority, Status);
+
+                    MainWindow.listView.Items.Add(newNote);
+
+                    LogIfChanged("Treść", textT, contentText);
+                    LogIfChanged("Data rozpoczęcia", startT.ToString("dd.MM.yyyy"), StartDate.ToString("dd.MM.yyyy"));
+                    LogIfChanged("Data zakończenia", endT.ToString("dd.MM.yyyy"), EndDate.ToString("dd.MM.yyyy"));
+                    LogIfChanged("Priorytet", priorityT, Priority);
+                    LogIfChanged("Status", statusT, Status);
+                }
+                Hide();
+                MainWindow.Show();
             }
-            Hide();
-            MainWindow.Show();
+            void LogIfChanged(string propertyName, string oldValue, string newValue)
+            {
+                if (oldValue != newValue)
+                {
+                    Log.Information($"Użytkownik edytował obiekt z listy: {propertyName} - {oldValue} --> {newValue}");
+                }
+            }
         }
     }
 }

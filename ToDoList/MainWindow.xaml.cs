@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using Microsoft.Extensions.Logging;
+using Serilog;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace ToDoList
@@ -13,9 +15,20 @@ namespace ToDoList
 
         public MainWindow()
         {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.File("logs.txt", rollingInterval: RollingInterval.Day, outputTemplate: "{Timestamp:dd-MM-yyyy HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}")
+                .CreateLogger();
+
+            Log.Information("Włączono aplikację");
             InitializeComponent();
             userControl1 = new UserControl1(this);
             userControlEdit = new UserControlEdit(this);
+        }
+
+        private void WindowClosed(object sender, EventArgs e)
+        {
+            Log.Information("Aplikacja została zamknięta.");
         }
 
         public void ButtonExit(object sender, EventArgs e)
@@ -41,8 +54,16 @@ namespace ToDoList
 
         private void DelButton_Click(object sender, RoutedEventArgs e)
         {
-            object DelNote = listView.SelectedItem;
-            listView.Items.Remove(DelNote);
+            if (listView.SelectedItem is Note delNote)
+            {
+                Log.Information("Użytkownik usunął obiekt z listy: [" + delNote.Show() + "]");
+
+                listView.Items.Remove(delNote);
+            }
+            else
+            {
+                Log.Warning("Zaznaczony obiekt nie jest obiektem klasy Note");
+            }
         }
 
         private void EditButton_Click(Object sender, RoutedEventArgs e)
@@ -56,6 +77,7 @@ namespace ToDoList
             else
             {
                 MessageBox.Show("Musisz wybrać element z listy", "Błąd");
+                Log.Error("Nie wybrano elementu z listy");
             }
             //listView.Items
         }
