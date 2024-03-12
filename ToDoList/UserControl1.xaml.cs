@@ -70,7 +70,7 @@ namespace ToDoList
             {
                 Note newNote = new Note(contentText, EndDate, StartDate, Priority, Status);
                 MainWindow.listView.Items.Add(newNote);
-                Log.Information("Dodano zadanie: {" + newNote.Show() + "}");
+                Log.Information("Dodano zadanie:{@name}",newNote);
             }
         }
     }

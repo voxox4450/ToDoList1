@@ -17,10 +17,13 @@ namespace ToDoList
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
-                .WriteTo.File("logs.txt", rollingInterval: RollingInterval.Day, outputTemplate: "{Timestamp:dd-MM-yyyy HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}")
+                .Enrich.WithProperty("DeviceName", Environment.MachineName)
+                .WriteTo.File("logs.txt", rollingInterval: RollingInterval.Day, outputTemplate: "{Properties} {Timestamp:dd-MM-yyyy HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}")
+                .WriteTo.Debug(outputTemplate: "{Properties} {Timestamp:dd-MM-yyyy HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}")
                 .CreateLogger();
 
             Log.Information("Włączono aplikację");
+
             InitializeComponent();
             userControl1 = new UserControl1(this);
             userControlEdit = new UserControlEdit(this);
