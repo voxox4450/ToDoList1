@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ToDoList
 {
-    public class Status(int id)
+    public class Status
     {
-        public int id { get; set; } = id;
+        public int id { get; set; }
         public string name { get; set; }
     }
 }

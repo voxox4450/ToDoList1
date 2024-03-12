@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ToDoList
 {
-    public class Priority(int id)
+    public class Priority
     {
-        public int id { get; set; } = id;
+        public int id { get; set; }
         public string name { get; set; }
     }
 }

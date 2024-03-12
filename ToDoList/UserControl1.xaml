@@ -66,14 +66,14 @@
                 FontSize="25">
                 Priorytet:
             </Label>
-            <!--<Label
+            <Label
                 Grid.Row="5"
                 Grid.Column="0"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 FontSize="25">
                 Status:
-            </Label>-->
+            </Label>
             <TextBox
                 x:Name="content"
                 Grid.Row="1"
@@ -101,17 +101,8 @@
                 Width="380"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontSize="60">
-                <ComboBoxItem>
-                    Wysoki
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    Średni
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    Niski
-                </ComboBoxItem>
-            </ComboBox>
+                DisplayMemberPath="name"
+                FontSize="60" />
             <ComboBox
                 x:Name="status"
                 Grid.Row="5"
@@ -119,18 +110,9 @@
                 Width="380"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
+                DisplayMemberPath="name"
                 FontSize="60"
-                Visibility="Collapsed">
-                <ComboBoxItem>
-                    Ukońoczono
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    Rozpoczęto
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    Dodano
-                </ComboBoxItem>
-            </ComboBox>
+                Visibility="Visible" />
             <Button
                 Grid.Row="6"
                 Grid.Column="2"
