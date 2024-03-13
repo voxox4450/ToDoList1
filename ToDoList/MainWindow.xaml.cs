@@ -17,12 +17,6 @@ namespace ToDoList
 
         public MainWindow()
         {
-            //var note = new Note()
-            //{
-            //    EndDate = DateTime.Now,
-            //    Priority = "asd"
-            //};
-
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .Enrich.WithProperty("DeviceName", Environment.MachineName)
@@ -33,6 +27,11 @@ namespace ToDoList
             Log.Information("Włączono aplikację");
 
             InitializeComponent();
+
+            //Constants.InitializePriorities();
+            //Constants.InitializeStatuses();
+            //dodac liste do sql Bartek niech sprawdzi cyz jest haraszo i skonczyc projekt
+
             userControl1 = new UserControl1(this);
             userControlEdit = new UserControlEdit(this);
         }

@@ -8,6 +8,7 @@ namespace ToDoList
 {
     public class Note
     {
+        public int Id;
         public string ContentText { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime StartDate { get; set; }
