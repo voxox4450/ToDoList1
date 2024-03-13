@@ -49,19 +49,11 @@ namespace ToDoList
             string contentText = content.Text;
             DateTime EndDate = Convert.ToDateTime(end.SelectedDate);
             DateTime StartDate = Convert.ToDateTime(start.SelectedDate);
-            string Priority = prio.Text;
-            string Status = status.Text;
-            if (StartDate < DateTime.Now && EndDate > DateTime.Now)
-            {
-                Status = "Rozpoczęto";
-            }
-            if (StartDate > DateTime.Now)
-            {
-                Status = "Dodano";
-            }
+            int priorityInt = MainWindow.priorityList.FindIndex(x => x.Name == prio.Text);
+            int statusInt = MainWindow.statusList.FindIndex(x => x.Name == status.Text);
             if (EndDate < DateTime.Now && StartDate < EndDate)
             {
-                Status = "Ukońoczono";
+                statusInt = 0;
             }
             if (DateTime.Compare(StartDate, EndDate) >= 0)
             {
@@ -70,8 +62,17 @@ namespace ToDoList
             }
             else
             {
-                Note newNote = new Note(contentText, EndDate, StartDate, Priority, Status);
+                Note newNote = new Note()
+                {
+                    ContentText = contentText,
+                    EndDate = EndDate,
+                    StartDate = StartDate,
+                    PriorityId = priorityInt,
+                    StatusId = statusInt
+                };
                 MainWindow.listView.Items.Add(newNote);
+                newNote.GetPriority();
+                newNote.GetStatus();
                 Log.Information("Dodano zadanie:{@name}", newNote);
             }
         }

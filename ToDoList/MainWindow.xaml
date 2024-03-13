@@ -89,22 +89,22 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding ContentText}" Header="Treść" />
-                        <GridViewColumn DisplayMemberBinding="{Binding StartDate}" Header="Rozpoczęcię" />
-                        <GridViewColumn DisplayMemberBinding="{Binding EndDate}" Header="Zakończenie" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Priority}" Header="Priorytet" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" />
+                        <GridViewColumn DisplayMemberBinding="{Binding StartDate, StringFormat={}{0:dd.MM.yyyy}}" Header="Rozpoczęcię" />
+                        <GridViewColumn DisplayMemberBinding="{Binding EndDate, StringFormat={}{0:dd.MM.yyyy}}" Header="Zakończenie" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Priority.Name}" Header="Priorytet" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Status.Name}" Header="Status" />
                     </GridView>
                 </ListView.View>
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Status}" Value="Dodano">
+                            <DataTrigger Binding="{Binding Status.Name}" Value="Dodano">
                                 <Setter Property="Background" Value="#FFFF5151" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Status}" Value="Rozpoczęto">
+                            <DataTrigger Binding="{Binding Status.Name}" Value="Rozpoczęto">
                                 <Setter Property="Background" Value="#FFF5F535" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Status}" Value="Ukońoczono">
+                            <DataTrigger Binding="{Binding Status.Name}" Value="Ukońoczono">
                                 <Setter Property="Background" Value="Green" />
                             </DataTrigger>
                         </Style.Triggers>

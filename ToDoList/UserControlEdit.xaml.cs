@@ -43,8 +43,8 @@ namespace ToDoList
             content.Text = selectedNote.ContentText;
             start.SelectedDate = selectedNote.StartDate;
             end.SelectedDate = selectedNote.EndDate;
-            prio.Text = selectedNote.Priority;
-            status.Text = selectedNote.Status;
+            prio.Text = selectedNote.Priority.Name;
+            status.Text = selectedNote.Status.Name;
         }
 
         public void Show()
@@ -62,19 +62,11 @@ namespace ToDoList
             string contentText = content.Text;
             DateTime EndDate = Convert.ToDateTime(end.SelectedDate);
             DateTime StartDate = Convert.ToDateTime(start.SelectedDate);
-            string Priority = prio.Text;
-            string Status = status.Text;
-            if (StartDate < DateTime.Now && EndDate > DateTime.Now)
+            int priorityInt = MainWindow.priorityList.FindIndex(x => x.Name == prio.Text);
+            int statusInt = MainWindow.statusList.FindIndex(x => x.Name == status.Text);
+            if (EndDate < DateTime.Now && StartDate < EndDate)
             {
-                Status = "Rozpoczęto";
-            }
-            else if (StartDate > DateTime.Now)
-            {
-                Status = "Dodano";
-            }
-            else if (EndDate < DateTime.Now && StartDate < EndDate)
-            {
-                Status = "Ukońoczono";
+                statusInt = 0;
             }
             if (DateTime.Compare(StartDate, EndDate) >= 0)
             {
@@ -87,20 +79,29 @@ namespace ToDoList
                     string textT = delNote.ContentText;
                     DateTime startT = delNote.StartDate;
                     DateTime endT = delNote.EndDate;
-                    string priorityT = delNote.Priority;
-                    string statusT = delNote.Status;
+                    string priorityT = delNote.Priority.Name;
+                    string statusT = delNote.Status.Name;
 
                     MainWindow.listView.Items.Remove(delNote);
 
-                    Note newNote = new Note(contentText, EndDate, StartDate, Priority, Status);
+                    Note newNote = new Note()
+                    {
+                        ContentText = contentText,
+                        EndDate = EndDate,
+                        StartDate = StartDate,
+                        PriorityId = priorityInt,
+                        StatusId = statusInt
+                    };
 
                     MainWindow.listView.Items.Add(newNote);
 
+                    newNote.GetPriority();
+                    newNote.GetStatus();
                     LogIfChanged("Treść", textT, contentText);
                     LogIfChanged("Data rozpoczęcia", startT.ToString("dd.MM.yyyy"), StartDate.ToString("dd.MM.yyyy"));
                     LogIfChanged("Data zakończenia", endT.ToString("dd.MM.yyyy"), EndDate.ToString("dd.MM.yyyy"));
-                    LogIfChanged("Priorytet", priorityT, Priority);
-                    LogIfChanged("Status", statusT, Status);
+                    LogIfChanged("Priorytet", priorityT, newNote.Priority.Name);
+                    LogIfChanged("Status", statusT, newNote.Status.Name);
                 }
                 Hide();
                 MainWindow.Show();

@@ -6,17 +6,24 @@ using System.Threading.Tasks;
 
 namespace ToDoList
 {
-    public class Note(string contentText, DateTime endDate, DateTime startDate, string priority, string status)
+    public class Note
     {
-        public string ContentText { get; set; } = contentText;
-        public DateTime EndDate { get; set; } = endDate;
-        public DateTime StartDate { get; set; } = startDate;
-        public string Priority { get; set; } = priority;
-        public string Status { get; set; } = status;
+        public string ContentText { get; set; }
+        public DateTime EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public int PriorityId { get; set; }
+        public Priority Priority { get; set; }
+        public Status Status { get; set; }
+        public int StatusId { get; set; }
 
-        public string Show()
+        public void GetPriority()
         {
-            return contentText + " | " + startDate.ToString("dd.MM.yyyy") + " | " + endDate.ToString("dd.MM.yyyy") + " | " + priority + " | " + status;
+            Priority = Constants.GetPriority(PriorityId);
+        }
+
+        public void GetStatus()
+        {
+            Status = Constants.GetStatus(StatusId);
         }
     }
 }
