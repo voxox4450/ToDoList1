@@ -13,11 +13,9 @@ namespace ToDoList
         private UserControl1 userControl1;
         private UserControlEdit userControlEdit;
 
-        //public List<Priority> priorityList { get; set; } = Constants.GetPriorities().ToList();
-        //public List<Status> statusList { get; set; } = Constants.GetStatus().ToList();
         public List<Priority> priorityList { get; set; } = Constants.GetPriorities();
 
-        public List<Note> Notes { get; set; } // Lista notatek
+        public List<Note> Notes { get; set; }
 
         public List<Status> statusList { get; set; } = Constants.GetStatuses();
 
@@ -88,7 +86,6 @@ namespace ToDoList
                         Log.Warning("Nie można znaleźć notatki do usunięcia w bazie danych.");
                     }
                 }
-                //listView.Items.Remove(delNote);
             }
             else
             {

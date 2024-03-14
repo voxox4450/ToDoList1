@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Data;
 using System.Windows;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ToDoList
 {
@@ -14,7 +15,7 @@ namespace ToDoList
         {
             using var dbContext = new Database();
 
-            var statuses = new List<Status>()
+            var priorities = new List<Priority>()
             {
                 new(){ Id = 0, Name = "Wysoki" },
                 new(){ Id = 1, Name = "Średni" },
@@ -22,19 +23,19 @@ namespace ToDoList
             };
             if (!dbContext.Priorities.Any())
             {
-                dbContext.AddRange(statuses);
+                dbContext.AddRange(priorities);
                 dbContext.SaveChanges();
             }
 
-            var priorities = new List<Priority>()
+            var statuses = new List<Status>()
             {
-                new(){ Id = 0, Name = "Ukońoczono" },
+                new(){ Id = 0, Name = "Ukończono" },
                 new(){ Id = 1, Name = "Rozpoczęto" },
                 new(){ Id = 2, Name = "Dodano" },
             };
-            if (!dbContext.Priorities.Any())
+            if (!dbContext.Statuses.Any())
             {
-                dbContext.AddRange(priorities);
+                dbContext.AddRange(statuses);
                 dbContext.SaveChanges();
             }
         }

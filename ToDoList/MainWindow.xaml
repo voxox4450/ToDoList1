@@ -104,8 +104,8 @@
                             <DataTrigger Binding="{Binding Status.Name}" Value="Rozpoczęto">
                                 <Setter Property="Background" Value="#FFF5F535" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Status.Name}" Value="Ukońoczono">
-                                <Setter Property="Background" Value="Green" />
+                            <DataTrigger Binding="{Binding Status.Name}" Value="Ukończono">
+                                <Setter Property="Background" Value="LightGreen" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
