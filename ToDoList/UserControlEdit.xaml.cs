@@ -64,45 +64,61 @@ namespace ToDoList
             DateTime StartDate = Convert.ToDateTime(start.SelectedDate);
             int priorityInt = MainWindow.priorityList.FindIndex(x => x.Name == prio.Text);
             int statusInt = MainWindow.statusList.FindIndex(x => x.Name == status.Text);
+
             if (EndDate < DateTime.Now && StartDate < EndDate)
             {
                 statusInt = 0;
             }
+
             if (DateTime.Compare(StartDate, EndDate) >= 0)
             {
                 MessageBox.Show("Rozpoczecie musi być większe niż zakończenie", "Błąd");
             }
             else
             {
-                if (MainWindow.listView.SelectedItem is Note delNote)
+                if (selectedNote != null)
                 {
-                    string textT = delNote.ContentText;
-                    DateTime startT = delNote.StartDate;
-                    DateTime endT = delNote.EndDate;
-                    string priorityT = delNote.Priority.Name;
-                    string statusT = delNote.Status.Name;
-
-                    MainWindow.listView.Items.Remove(delNote);
-
-                    Note newNote = new Note()
+                    using (var dbContext = new Database())
                     {
-                        ContentText = contentText,
-                        EndDate = EndDate,
-                        StartDate = StartDate,
-                        PriorityId = priorityInt,
-                        StatusId = statusInt
-                    };
+                        var noteToUpdate = dbContext.Notes.FirstOrDefault(n => n.Id == selectedNote.Id);
 
-                    MainWindow.listView.Items.Add(newNote);
+                        if (noteToUpdate != null)
+                        {
+                            noteToUpdate.ContentText = contentText;
+                            noteToUpdate.StartDate = StartDate;
+                            noteToUpdate.EndDate = EndDate;
+                            noteToUpdate.PriorityId = priorityInt;
+                            noteToUpdate.StatusId = statusInt;
 
-                    newNote.GetPriority();
-                    newNote.GetStatus();
-                    LogIfChanged("Treść", textT, contentText);
-                    LogIfChanged("Data rozpoczęcia", startT.ToString("dd.MM.yyyy"), StartDate.ToString("dd.MM.yyyy"));
-                    LogIfChanged("Data zakończenia", endT.ToString("dd.MM.yyyy"), EndDate.ToString("dd.MM.yyyy"));
-                    LogIfChanged("Priorytet", priorityT, newNote.Priority.Name);
-                    LogIfChanged("Status", statusT, newNote.Status.Name);
+                            dbContext.SaveChanges();
+
+                            selectedNote.ContentText = contentText;
+                            selectedNote.StartDate = StartDate;
+                            selectedNote.EndDate = EndDate;
+                            selectedNote.PriorityId = priorityInt;
+                            selectedNote.StatusId = statusInt;
+                            selectedNote.GetPriority();
+                            selectedNote.GetStatus();
+
+                            LogIfChanged("Treść", selectedNote.ContentText, contentText);
+                            LogIfChanged("Data rozpoczęcia", selectedNote.StartDate.ToString("dd.MM.yyyy"), StartDate.ToString("dd.MM.yyyy"));
+                            LogIfChanged("Data zakończenia", selectedNote.EndDate.ToString("dd.MM.yyyy"), EndDate.ToString("dd.MM.yyyy"));
+                            LogIfChanged("Priorytet", selectedNote.Priority.Name, MainWindow.priorityList[priorityInt].Name);
+                            LogIfChanged("Status", selectedNote.Status.Name, MainWindow.statusList[statusInt].Name);
+                            MainWindow.Notes = dbContext.GetNotesWithDetails();
+                        }
+                        else
+                        {
+                            Log.Error("Nie można znaleźć notatki do edycji w bazie danych.");
+                        }
+                    }
                 }
+                else
+                {
+                    Log.Error("Nie wybrano notatki do edycji.");
+                }
+                MainWindow.listView.ItemsSource = MainWindow.Notes;
+
                 Hide();
                 MainWindow.Show();
             }
