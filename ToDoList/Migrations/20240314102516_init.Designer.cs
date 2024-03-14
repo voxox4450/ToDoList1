@@ -12,8 +12,8 @@ using ToDoList;
 namespace ToDoList.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20240313134921_DB3")]
-    partial class DB3
+    [Migration("20240314102516_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

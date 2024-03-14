@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Azure.Core.HttpHeader;
 
 namespace ToDoList
 {
@@ -62,18 +64,24 @@ namespace ToDoList
             }
             else
             {
-                Note newNote = new Note()
+                using (var dbContext = new Database())
                 {
-                    ContentText = contentText,
-                    EndDate = EndDate,
-                    StartDate = StartDate,
-                    PriorityId = priorityInt,
-                    StatusId = statusInt
-                };
-                MainWindow.listView.Items.Add(newNote);
-                newNote.GetPriority();
-                newNote.GetStatus();
-                Log.Information("Dodano zadanie:{@name}", newNote);
+                    Note newNote = new Note()
+                    {
+                        ContentText = contentText,
+                        EndDate = EndDate,
+                        StartDate = StartDate,
+                        PriorityId = priorityInt,
+                        StatusId = statusInt
+                    };
+                    dbContext.AddRange(newNote);
+                    dbContext.SaveChanges();
+                    newNote.GetPriority();
+                    newNote.GetStatus();
+                    Log.Information("Dodano zadanie:{@name}", newNote);
+                    MainWindow.Notes = dbContext.GetNotesWithDetails();
+                    MainWindow.listView.ItemsSource = MainWindow.Notes;
+                }
             }
         }
     }

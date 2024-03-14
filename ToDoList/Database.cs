@@ -70,5 +70,21 @@ namespace ToDoList
         {
             optionsBuilder.UseSqlServer("Server=ACARS-0099;User=sa;Password=praktyki;Database=myDb;Trust Server Certificate=True;");
         }
+
+        public List<Note> GetNotes()
+        {
+            using (var context = new Database())
+            {
+                return context.Notes.ToList();
+            }
+        }
+
+        public List<Note> GetNotesWithDetails()
+        {
+            using (var context = new Database())
+            {
+                return context.Notes.Include(n => n.Priority).Include(n => n.Status).ToList();
+            }
+        }
     }
 }

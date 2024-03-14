@@ -2,65 +2,38 @@
 
 namespace ToDoList
 {
-    public static class Constants
-
+    public class Constants
     {
-        private static List<Priority> _priorities;
-        private static List<Status> _status;
-
-        public static void InitializePriorities()
+        public static List<Priority> GetPriorities()
         {
-            _priorities = new List<Priority>
+            using (var context = new Database())
             {
-                new Priority { Id = 0, Name = "Wysoki" },
-                new Priority { Id = 1, Name = "Średni" },
-                new Priority { Id = 2, Name = "Niski" }
-            };
+                return context.Priorities.ToList();
+            }
         }
-
-        public static void InitializeStatuses()
-        {
-            _status = new List<Status>
-            {
-                new Status { Id = 0, Name = "Ukońoczono" },
-                new Status { Id = 1, Name = "Rozpoczęto" },
-                new Status { Id = 2, Name = "Dodano" }
-            };
-        }
-
-        //private static readonly List<Priority> _priorities =
-        //[
-        //    new(){ Id = 0, Name = "Wysoki" },
-        //    new(){ Id = 1, Name = "Średni" },
-        //    new(){ Id = 2, Name = "Niski" }
-        //];
-
-        //private static readonly List<Status> _status =
-        //[
-        //    new(){ Id = 0, Name = "Ukońoczono" },
-        //    new(){ Id = 1, Name = "Rozpoczęto" },
-        //    new(){ Id = 2, Name = "Dodano" },
-
-        //];
 
         public static Priority GetPriority(int id)
         {
-            return _priorities.First(x => x.Id == id);
+            using (var context = new Database())
+            {
+                return context.Priorities.First(x => x.Id == id);
+            }
         }
 
-        public static IEnumerable<Priority> GetPriorities()
+        public static List<Status> GetStatuses()
         {
-            return _priorities;
+            using (var context = new Database())
+            {
+                return context.Statuses.ToList();
+            }
         }
 
         public static Status GetStatus(int id)
         {
-            return _status.First(x => x.Id == id);
-        }
-
-        public static IEnumerable<Status> GetStatus()
-        {
-            return _status;
+            using (var context = new Database())
+            {
+                return context.Statuses.First(x => x.Id == id);
+            }
         }
     }
 }

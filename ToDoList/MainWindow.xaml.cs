@@ -12,8 +12,14 @@ namespace ToDoList
     {
         private UserControl1 userControl1;
         private UserControlEdit userControlEdit;
-        public List<Priority> priorityList { get; set; } = Constants.GetPriorities().ToList();
-        public List<Status> statusList { get; set; } = Constants.GetStatus().ToList();
+
+        //public List<Priority> priorityList { get; set; } = Constants.GetPriorities().ToList();
+        //public List<Status> statusList { get; set; } = Constants.GetStatus().ToList();
+        public List<Priority> priorityList { get; set; } = Constants.GetPriorities();
+
+        public List<Note> Notes { get; set; } // Lista notatek
+
+        public List<Status> statusList { get; set; } = Constants.GetStatuses();
 
         public MainWindow()
         {
@@ -28,12 +34,13 @@ namespace ToDoList
 
             InitializeComponent();
 
-            //Constants.InitializePriorities();
-            //Constants.InitializeStatuses();
-            //dodac liste do sql Bartek niech sprawdzi cyz jest haraszo i skonczyc projekt
-
             userControl1 = new UserControl1(this);
             userControlEdit = new UserControlEdit(this);
+            using (var dbContext = new Database())
+            {
+                Notes = dbContext.GetNotesWithDetails();
+            }
+            listView.ItemsSource = Notes;
         }
 
         private void WindowClosed(object sender, EventArgs e)
@@ -66,14 +73,28 @@ namespace ToDoList
         {
             if (listView.SelectedItem is Note delNote)
             {
-                Log.Information("Użytkownik usunął obiekt z listy: [ {@name}]", delNote);
-
-                listView.Items.Remove(delNote);
+                using (var dbContext = new Database())
+                {
+                    var noteToRemove = dbContext.Notes.FirstOrDefault(n => n.Id == delNote.Id);
+                    if (noteToRemove != null)
+                    {
+                        dbContext.Notes.Remove(noteToRemove);
+                        dbContext.SaveChanges();
+                        Log.Information("Usunięto zadanie: {@name}", delNote);
+                        Notes = dbContext.GetNotesWithDetails();
+                    }
+                    else
+                    {
+                        Log.Warning("Nie można znaleźć notatki do usunięcia w bazie danych.");
+                    }
+                }
+                //listView.Items.Remove(delNote);
             }
             else
             {
                 Log.Warning("Zaznaczony obiekt nie jest obiektem klasy Note");
             }
+            listView.ItemsSource = Notes;
         }
 
         private void EditButton_Click(Object sender, RoutedEventArgs e)
